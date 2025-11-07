@@ -18,7 +18,7 @@ const availabilitySchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    date: { type: String, required: true },
+    date: { type: Date, required: true },
     timeSlots: [timeSlotSchema],
 }, { timestamps: true });
 

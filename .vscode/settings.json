@@ -1,0 +1,6 @@
+{
+    "editor.suggest.preview": true,
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.inlineSuggest.minShowDelay": 5,
+    "editor.inlineSuggest.enabled": false
+}

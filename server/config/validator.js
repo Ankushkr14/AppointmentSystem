@@ -29,4 +29,37 @@ export const loginSchema = Joi.object({
         'string.empty':'Password is required',
         'string.min':'Password must have at least 6 characters',
     })
-})
+});
+
+export const addSlotsSchema = Joi.object({
+    date: Joi.date().required().messages({
+        'string.empty':'Date is required'
+    }),
+    timeSlots: Joi.array().items(
+        Joi.object({
+        startTime: Joi.date().required(),
+        isBooked: Joi.boolean().optional()
+        })
+    ).min(1).required().messages({
+        'string.empty':'At least 1 time slot is required'
+    })  
+});
+
+export const removeSlotsSchema = Joi.object({
+    date: Joi.date().required().messages({
+        'string.empty':'Date is required'
+    }),
+    timeSlots: Joi.array().items(
+        Joi.object({
+            startTime: Joi.date().required()
+        })
+    ).min(1).required().messages({
+        'string.empty':'At least 1 time slot is required'
+    })        
+});
+
+export const getAvailabilitySchema = Joi.object({
+    professorId: Joi.string().required().messages({
+        "string.empty": "Professor Id is required",
+    })
+});
