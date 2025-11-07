@@ -63,3 +63,35 @@ export const getAvailabilitySchema = Joi.object({
         "string.empty": "Professor Id is required",
     })
 });
+
+export const bookAppointmentSchema = Joi.object({
+  professorId: Joi.string().required().messages({
+    "any.required": "Professor ID is required",
+    "string.base": "Professor ID must be a string",
+  }),
+  availabilityId: Joi.string().required().messages({
+    "any.required": "Availability ID is required",
+  }),
+  timeSlotId: Joi.string().required().messages({
+    "any.required": "Time slot ID is required",
+  }),
+  notes: Joi.string().allow("").optional(),
+});
+
+export const cancelAppointmentSchema = Joi.object({
+  appointmentId: Joi.string().required().messages({
+    "any.required": "Appointment ID is required",
+  }),
+});
+
+export const completeAppointmentSchema = Joi.object({
+  appointmentId: Joi.string().required().messages({
+    "any.required": "Appointment ID is required",
+  }),
+});
+
+export const getAppointmentsSchema = Joi.object({
+  professorId: Joi.string().optional(),
+  studentId: Joi.string().optional(),
+  status: Joi.string().valid("booked", "completed", "cancelled").optional(),
+});

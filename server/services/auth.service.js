@@ -6,6 +6,7 @@ const generateToken = (user) => {
     const payload = {
         id: user._id,
         role: user.role,
+        username: user.username,
     };
 
     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '7d' });
@@ -68,6 +69,7 @@ export const loginUser = async (data) => {
                 message: "User not registered",
             };
         }   
+        
         const isPasswordValid = await bcrypt.compare(data.password, user.password);
         if(!isPasswordValid) {
             return {

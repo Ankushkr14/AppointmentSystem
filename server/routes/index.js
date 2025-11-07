@@ -1,6 +1,8 @@
 import express from 'express';
 import authRouter from './auth.js';
 import availabilityRouter from './availability.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
+import appointmentRoute from './appointment.js';
 const router = express.Router();
 
 router.get('/health-check', (req, res)=> {
@@ -12,6 +14,7 @@ router.get('/health-check', (req, res)=> {
 
 // Authentication routes
 router.use('/auth', authRouter);
-router.use('/availability', availabilityRouter);
+router.use('/availability', authMiddleware, availabilityRouter);
+router.use('/appointment', authMiddleware, appointmentRoute);
 
 export default router;

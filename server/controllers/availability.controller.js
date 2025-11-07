@@ -2,7 +2,8 @@ import { addTimeSlots, getTimeSlots, removeTimeSlots } from "../services/availab
 
 export const addTimeSlot = async (req, res) => {
     try {
-        const result = await addTimeSlots({ ...req.body, professorId: req.params.professorId });
+        const professorId = req.user.id
+        const result = await addTimeSlots({ ...req.body, professorId });
         if(result.success) {
             res.status(201).json({
                 success: true,
@@ -25,7 +26,8 @@ export const addTimeSlot = async (req, res) => {
 
 export const removeTimeSlot = async (req, res) => {
     try {
-        const result = await removeTimeSlots({ ...req.body, professorId: req.params.professorId });
+        const professorId = req.user.id;
+        const result = await removeTimeSlots({ ...req.body, professorId });
         if(result.success){
             res.status(200).json({
                 success: true,
