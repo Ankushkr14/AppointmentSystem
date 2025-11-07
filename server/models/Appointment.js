@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 // Appointment Schema
 const appointmentSchema = new mongoose.Schema ({ 
-    professionId: {
+    professorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
@@ -17,7 +17,7 @@ const appointmentSchema = new mongoose.Schema ({
         ref: 'Availability',
         required: true,
     },
-    slotId: {
+    timeSlotId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
