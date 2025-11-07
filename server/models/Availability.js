@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 // Time Slot Subschema
 const timeSlotSchema = new mongoose.Schema ({
-    startTime: { type: String, required: true },
+    startTime: { type: Date, required: true },
     isBooked: { type: Boolean, default: false },
     appointmentId: {
         type: mongoose.Schema.Types.ObjectId,
