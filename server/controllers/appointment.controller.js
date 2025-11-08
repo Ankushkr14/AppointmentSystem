@@ -1,10 +1,10 @@
 import { bookAppointment, cancelAppointment, completeAppointment, getAppointments } from "../services/appointment.service.js";
 
 export const getAllAppointmentController = async (req, res) => {
-    const userId = req.user.id;
-    const role = req.user.role;
+    const { status, date, page, limit } = req.query;
+    const { id: userId, role } = req.user;
 
-    const result = await getAppointments({ userId, role });
+    const result = await getAppointments({ userId, role, status, date, page, limit });
     if(result.success){
         res.status(200).json(result);
     } else {

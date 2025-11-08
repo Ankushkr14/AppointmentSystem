@@ -58,7 +58,8 @@ export const bookAppointment = async ({studentId, professorId, availabilityId, t
             data: appointment
         };
     } catch (error) {
-        console.error("[Error]: occured while updating appointment: ", error);
+        await session.abortTransaction();
+        console.error("[Error]: occured while booking appointment: ", error);
         return {
             success: false,
             message: "Internal server error",
@@ -174,31 +175,33 @@ export const completeAppointment = async ({ appointmentId, professorId }) => {
 };
 
 // fetch all appointments
-export const getAppointments = async ({userId, role}) => {
+export const getAppointments = async ({userId, role, status, date, page = 1, limit = 10}) => {
     try {
-        let filter = {};
-        
-        if(role === 'professor') {
-            filter.professorId = userId;
-        } else if (role === 'student') {
-            filter.studentId = userId;
-        } else {
-            return {
-                success: false,
-                message: 'Invalid role. Only professor or student can view appointment details'
-            };
-        }
+        const filter = {};
+        if (role === 'professor') filter.professorId = userId;
+        if (role === 'student') filter.studentId = userId;
+        if (status) filter.status = status;
+        if (date) filter.date = new Date(date);
+
+        const skip = (page - 1)*limit;
 
         const appointments = await AppointmentModel.find(filter)
-        .populate("professorId", "name email")
+        .select("professorId studentId date startTime status notes") 
         .populate("studentId", "name email")
-        .populate("availabilityId")
-        .sort({ createdAt: -1});
+        .populate("professorId", "name email")
+        .sort({ date: 1, startTime: 1 })
+        .skip(skip)
+        .limit(parseInt(limit));
+
+        const total = await AppointmentModel.countDocuments(filter);
 
         return {
             success: true,
-            message: "Appointment fetched successfully",
-            data: appointments
+            message: "Appointments fetched successfully",
+            total,
+            page,
+            pages: Math.ceil(total / limit),
+            appointments,
         };
     } catch (error) {
         console.error("[Error]: occured while fetching all appointments: ", error);
