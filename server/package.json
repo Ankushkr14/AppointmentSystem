@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --forceExit"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,8 @@
     "mongoose": "^8.19.3"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0"
+    "@types/bcrypt": "^6.0.0",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
   }
 }

@@ -21,7 +21,7 @@ export const authMiddleware = (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-        const user = { id: decoded.id, role: decoded.role, username: decoded.username };
+        const user = { id: decoded.id, role: decoded.role };
 
         setCachedUser(token, user);
         req.user = user;

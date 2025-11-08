@@ -3,6 +3,7 @@ import authRouter from './auth.js';
 import availabilityRouter from './availability.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import appointmentRoute from './appointment.js';
+import userRoute from './user.js';
 const router = express.Router();
 
 router.get('/health-check', (req, res)=> {
@@ -16,5 +17,6 @@ router.get('/health-check', (req, res)=> {
 router.use('/auth', authRouter);
 router.use('/availability', authMiddleware, availabilityRouter);
 router.use('/appointment', authMiddleware, appointmentRoute);
+router.use('/user', authMiddleware, userRoute);
 
 export default router;
